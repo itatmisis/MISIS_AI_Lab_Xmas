@@ -104,12 +104,12 @@ def send_email(addr_to: str, theme: str, message: str, pdf_path: str):
 
     try:
         with open(pdf_path, "rb") as file:
-                part = MIMEApplication(
-                    file.read(),
-                    Name=basename(pdf_path)
-                )
-                part['Content-Disposition'] = f'attachment; filename="{basename(pdf_path)}"'
-                msg.attach(part)
+            part = MIMEApplication(
+                file.read(),
+                Name=basename(pdf_path)
+            )
+            part['Content-Disposition'] = f'attachment; filename="{basename(pdf_path)}"'
+            msg.attach(part)
     except Exception as e:
         print('Файл не найден')
         print(e)
@@ -120,6 +120,7 @@ def send_email(addr_to: str, theme: str, message: str, pdf_path: str):
     server.login(addr_from, password)
     server.send_message(msg)
     server.quit()
+
     return {
         'message': 'Successful',
         'from': EMAIL_LOGIN,
@@ -171,7 +172,7 @@ async def save_predict(document_id, extra_info: str,
             sending_info = send_email(addr_to=email,
                                       theme='Документы',
                                       message=msg_text,
-                                      pdf_path = 'documents/' + doc_path)
+                                      pdf_path='/documents/' + doc_path)
             print('Письмо успешно отправлено!')
         except Exception as e:
             print('Ошибка при отправке письма!')
@@ -201,7 +202,7 @@ async def save_doc(name: str, path: str):
 
 @app.post("/save_email_relation",
           description=("Сохраняет новый email и привязывает"
-                       " к нему определнные тип документа"))
+                       " к нему определенный тип документа"))
 async def save_email_relation(email: str, type_id):
     try:
         etype_rel = email_doctype_rel()
@@ -214,6 +215,21 @@ async def save_email_relation(email: str, type_id):
     return {
         "message": "Successful", "id": etype_rel.id,
         "email": etype_rel.email, "type_id": etype_rel.type_id.id
+    }
+
+
+@app.post("/delete_email_relation",
+          description=("Удаляет связь email и типа документа"))
+async def delete_email_relation(id):
+    try:
+        q = email_doctype_rel.delete().where(email_doctype_rel.id == id)
+        q.execute()
+    except Exception as e:
+        return {"status_code": 400, "error": str(e)}
+
+    return {
+        "message": "Successful",
+        "id": id,
     }
 
 
@@ -260,6 +276,7 @@ async def get_all_docs():
             })
     except Exception as e:
         return {"status_code": 400, "error": str(e)}
+
     return {"message": "Successful", "documents": data}
 
 
@@ -276,6 +293,24 @@ async def get_all_types():
     except Exception as e:
         return {"status_code": 400, "error": str(e)}
     return {"Message": "Successful", "types": data}
+
+
+@app.get("/get_all_email_doctype_rel",
+         description=("Возвращает список всех email - type_id"))
+async def get_all_email_doctype_rel():
+    try:
+        rels = email_doctype_rel.select()  # relations
+        data = []
+        for rel in rels:
+            data.append({
+                "id": rel.id,
+                "email": rel.email,
+                "type_id": rel.type_id.id,
+                "type_name": rel.type_id.name
+            })
+    except Exception as e:
+        return {"status_code": 400, "error": str(e)}
+    return {"Message": "Successful", "data": data}
 
 
 if __name__ == "__main__":
