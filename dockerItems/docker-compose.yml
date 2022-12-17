@@ -51,6 +51,8 @@ services:
       dockerfile: Back/Crud.API/Dockerfile
     depends_on:
       - postgres
+    volumes:
+      - ../static/documents:/documents
     ports:
       - '8887:8000'
   # front:
