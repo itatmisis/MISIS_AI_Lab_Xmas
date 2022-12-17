@@ -1,0 +1,78 @@
+version: '3.9'
+services:
+  ml:
+    build: 
+        context: ../
+        dockerfile: Back/ML_Worker/Dockerfile
+    depends_on:
+      - rabbitmq
+    volumes:
+      - ../static/documents:/opt/docs
+      - ../static/predict_info:/opt/output
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    restart: always
+    ports:
+      - '15672:15672'
+      - '5672:5672'
+    environment:
+      - RABBITMQ_NODE_TYPE=stats
+      - RABBITMQ_NODE_NAME=rabbit@stats
+      - RABBITMQ_DEFAULT_USER=xmasuser
+      - RABBITMQ_DEFAULT_PASS=xmaspassword
+    networks:
+        - xmas
+  postgres:
+    image: postgres:14.1-alpine
+    restart: always
+    env_file:
+      - postgres.env
+    ports:
+      - '5432:5432'
+    environment:
+      PGDATA: "/var/lib/postgresql/data/pgdata"
+    volumes:
+      - ./pg_data:/var/lib/postgresql/data
+  api:
+    image: ${DOCKER_REGISTRY-}xmas-api
+    build:
+      context: ../
+      dockerfile: Back/XmasHack.API/Dockerfile
+    volumes:
+      - ../static/documents:/documents
+      - ../static/predict_info:/predict_info
+    ports:
+      - '8888:80'
+
+  crud_api:
+    image: ${DOCKER_REGISTRY-}crud_api
+    build:
+      context: ../
+      dockerfile: Back/Crud.API/Dockerfile
+    depends_on:
+      - postgres
+    ports:
+      - '8887:8000'
+  # front:
+  #   image: ${DOCKER_REGISTRY-}front
+  #     build:
+  #       context: ../
+  #       dockerfile: Front/xmas-hack/Dockerfile
+  #     ports:
+  #       - '3001:3000'
+
+  nginx-static:
+      container_name: nginx-static
+      image: nginx-static
+      build:
+          context: ../
+          dockerfile: nginx/Dockerfile
+      restart: always
+      ports:
+          - "8005:80"
+          
+
+
+networks:
+  xmas:
+    driver: bridge
