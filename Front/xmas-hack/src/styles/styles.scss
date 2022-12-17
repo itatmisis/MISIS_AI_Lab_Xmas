@@ -1,35 +1,48 @@
+
 $border-gray: #3d3d3d;
 
 
-.header {
-    background-color: white;
+.header{
+    // background-color: white;
     display: flex;
+    justify-content: space-around;
     width: 100%;
-    flex-direction: row;
-    height: 100px;
+    background-color: transparent;
+    // flex-direction:row;
+    // height: 100px;
 }
 
-.team-logo {
+.all_example{
     margin-top: 20px;
-    color: black;
+    padding-top: 20px;
+}
+
+.team-logo{
     font-size: 50px;
     align-items: center;
     display: flex;
     margin-left: 20px;
 
-    .logo {
+    .logo{
         text-decoration: none;
     }
 }
 
+.button_on_top{
+    position: relative;
+}
 
-.menu-items-block {
+.blur-fone{
+    -webkit-filter:blur(20px);
+}
+
+.menu-items-block{
     margin-left: 50px;
     height: 100%;
     display: flex;
     flex-direction: row;
 
-    .menu-item-block {
+    .menu-item-block{
         font-size: 20px;
         display: flex;
         flex-direction: column;
@@ -38,52 +51,50 @@ $border-gray: #3d3d3d;
         color: gray;
         height: 100%;
         text-decoration: none;
-
-        .menu-item-name {
+    
+        .menu-item-name{
             margin: 35px 0 35px 0;
         }
-
-        .selected {
+    
+        .selected{
             color: gray;
         }
 
-        .choosed-line {
+        .choosed-line{
             height: 2px;
             width: 100%;
             margin-bottom: auto;
-            background-color: gray;
+            background-color:  gray;
             border-radius: 0;
         }
-
-
+    
+    
     }
 }
 
-.body {
-    padding-top: 100px;
+.body{
     display: flex;
     align-items: center;
     justify-content: center;
 
-    .loadfiles {
+    .loadfiles{
         min-width: 800px;
         width: min-content;
-        display: flex;
+        display:  flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
 
-        .load-files-instruction {
+        .load-files-instruction{
             font-size: 20px;
             margin: 10px 10px 30px 10px;
         }
-
-        .predict-button {
+        .predict-button{
             margin: 20px 20px 20px 20px;
         }
     }
 
-    .loadedFiles {
+    .loadedFiles{
         margin-bottom: 150px;
         margin-top: 30px;
         display: flex;
@@ -91,21 +102,20 @@ $border-gray: #3d3d3d;
         align-items: center;
         justify-content: center;
 
-
+       
     }
 
-    .files {
+    .files{
         width: 50%;
-        margin: 0 auto;
+         margin: 0 auto;
         max-height: 600px;
-        overflow-y: scroll;
+        overflow-y:scroll;
     }
 
-    .loadedFilesHeader {
+    .loadedFilesHeader{
         font-size: 30px;
     }
-
-    .loadedFile {
+    .loadedFile{
         margin-top: 30px;
         height: 60px;
         width: 250px;
@@ -115,15 +125,14 @@ $border-gray: #3d3d3d;
 
 
         flex: 1 1 auto;
-        // padding: 5px;
+       // padding: 5px;
         border: 2px solid $border-gray;
         text-align: center;
         text-transform: uppercase;
         position: relative;
-        overflow: hidden;
+        overflow:hidden;
         transition: .3s;
         border-radius: 3px;
-
         &:after {
             position: absolute;
             transition: .3s;
@@ -138,23 +147,20 @@ $border-gray: #3d3d3d;
             transform: skewX(15deg);
             z-index: -1;
         }
-
         &:hover {
             cursor: pointer;
             color: #5bcaff;
-
             &:after {
-                left: -10%;
-                width: 120%;
+            left: -10%;
+            width: 120%;
             }
         }
 
-        .fileinfo {
+        .fileinfo{
             width: 80%;
             display: flex;
             flex-direction: column;
-
-            .fileName {
+            .fileName{
                 text-overflow: ellipsis;
                 overflow: hidden;
                 white-space: nowrap;
@@ -163,7 +169,7 @@ $border-gray: #3d3d3d;
                 margin-left: 5px;
             }
 
-            .weigth {
+            .weigth{
                 text-align: left;
                 font-size: 11px;
                 align-items: left;
@@ -175,24 +181,23 @@ $border-gray: #3d3d3d;
 
         }
 
-        .fileType {
+        .fileType{
             height: 100%;
-            align-items: center;
+            align-items:  center;
             justify-content: center;
-
-            .fileTypeImg {
+            .fileTypeImg{
                 margin-top: 5px;
-                height: 80%;
+                height:  80%;
             }
         }
     }
 }
 
-.spinner {
+.spinner{
     z-index: 10;
     position: absolute;
     border: 1px solid red;
-    width: 100%;
+    width:100%;
     height: 100%;
     top: 0;
     left: 0;
@@ -200,13 +205,18 @@ $border-gray: #3d3d3d;
     opacity: 60%;
 
     .spinner-item{
-        left: 47.5%;
+        left: 48%;
         top: 45%;
     }
-
+    
 }
 
-.send-files-btn {
+.daniil_galimov{
+    display: flex;
+    justify-content: center;
+}
+
+.send-files-btn{
     cursor: pointer;
     background-color: white;
     color: black;
@@ -216,35 +226,35 @@ $border-gray: #3d3d3d;
     margin-top: 30px;
 }
 
-.send-files-btn:hover {
-    background-color: #3d3d3d;
-    color: white;
+.send-files-btn:hover{
+    // background-color: #3d3d3d;
+    // color: white;
 }
 
 #files::-webkit-file-upload-button {
     visibility: hidden;
-}
+  }
+// l,mlml
 
-
-#files::before {
-    margin-left: 40px;
-    content: 'Выберите документы';
-    color: black;
+  #files::before {
+    color: white;
+    content: "Выбрать файл";
     display: inline-block;
-    background: -webkit-linear-gradient(top, #f9f9f9, #e3e3e3);
-    border: 1px solid #999;
+    // background: -webkit-linear-gradient(top, #f9f9f9, #e3e3e3);
+    // border: 1px solid #999;
     border-radius: 3px;
     padding: 5px 8px;
     outline: none;
     white-space: nowrap;
     -webkit-user-select: none;
     cursor: pointer;
-    text-shadow: 1px 1px #fff;
+    // text-shadow: 1px 1px #fff;
     font-weight: 700;
     font-size: 10pt;
-}
+  }
 
-.document-type{
+
+  .document-type{
     padding: 15px;
 }
 
@@ -260,6 +270,24 @@ $border-gray: #3d3d3d;
 
 }
 
+
+.document-type{
+    font-weight: bold;
+    text-decoration:underline; 
+}
+
+.word-cloud{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.tag-cloud-item{
+    border: 2px solid #5bcaff;
+    padding: 20px;
+    border-radius: 5px;
+}
 
 .document-type{
     font-weight: bold;

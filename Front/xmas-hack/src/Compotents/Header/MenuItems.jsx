@@ -10,9 +10,9 @@ import { Link } from "react-router-dom";
 function MenuItems(props) {
 
     return (
-        <div className="menu-items-block">
+        <div className="menu-items-block button_on_top">
             <Link to="/" style={{ textDecoration: 'none' }}>
-                <MenuItem
+                <MenuItem className="button_on_top"
                     Selected={props.page == PAGES_TYPE.LOAD_FILES}
                     ItemName="Загрузка файлов"
                     OnClick={() => props.setPage(PAGES_TYPE.LOAD_FILES)}

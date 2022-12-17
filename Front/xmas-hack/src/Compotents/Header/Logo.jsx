@@ -11,7 +11,8 @@ function Logo(props) {
     return (<Link to="/" style={{ textDecoration: 'none' }}>
         <div className="team-logo">
             <a className="logo" onClick={() => props.setPage(PAGES_TYPE.LOAD_FILES)}>MISIS AI Lab</a>
-        </div></Link>)
+        </div>
+    </Link>)
 }
 
 

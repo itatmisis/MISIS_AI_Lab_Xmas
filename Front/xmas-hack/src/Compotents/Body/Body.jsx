@@ -7,6 +7,8 @@ import { PAGES_TYPE } from "../../Constants/Pages";
 import LoadFiles from "./LoadFiles";
 import PredictHistory from "./PredictHistory";
 import LoadedFiles from "./LoadedFiles";
+import Example from "./full_body";
+
 
 
 function Body(props) {
@@ -15,9 +17,14 @@ function Body(props) {
         {props.page == PAGES_TYPE.LOAD_FILES ?
             (
                 <div>
+                    {/* <LoadFiles />
+                    <LoadedFiles /> */}
+                    {/* <Header /> */}
+                    <Example />
                     <LoadFiles />
                     <LoadedFiles />
                 </div>
+
             ) :
             (
                 <PredictHistory />
