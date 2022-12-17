@@ -68,7 +68,8 @@ export const reducer = (state = initialState, action) => {
                 ...state,
                 ui: {
                     ...state.ui,
-                    page: page
+                    page: page,
+                    spinner: false
                 }
             }
         }

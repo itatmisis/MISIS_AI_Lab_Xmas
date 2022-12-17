@@ -4,6 +4,7 @@ import WordCloud from "./WordCloud";
 import { connect } from "react-redux"
 import { storeActions } from "../../store/store"
 import { Navigate } from "react-router-dom";
+import SpinnerComp from "../SpinnerComp";
 
 function DocsInfo(props) {
 
@@ -14,24 +15,31 @@ function DocsInfo(props) {
                 props.docsIndo?.name ? (
                     <div className="docsInfo">
                         <div className="document-type">
-                            <p>Название документа: <span className="type-name">{props.docsIndo?.name}</span></p>
+                            <p>Документ: <span className="type-name">{props.docsIndo?.name}</span></p>
                         </div>
                         <div className="wordCloud">
                             <WordCloud
                                 fileName={props.docsIndo?.path} />
                         </div>
+                        {props.spinner ? (
+                            <SpinnerComp />
+                        ) : (
+                            <div></div>
+                        )}
                     </div>
                 ) : (
                     <Navigate to='/' />
                 )
             }
+
         </div>
     )
 }
 
 function mapStateToProps(state) {
     return {
-        docsIndo: state.data.currentDocsInfo
+        docsIndo: state.data.currentDocsInfo,
+        spinner: state.ui.spinner
     }
 }
 
