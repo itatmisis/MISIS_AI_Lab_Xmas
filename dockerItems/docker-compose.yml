@@ -45,9 +45,6 @@ services:
     volumes:
       - ../../../static/documents:/documents
       - ../../../static/predict_info:/predict_info
-
-    env_file:
-      - api.env
     ports:
       - '8155:80'
 
@@ -72,7 +69,7 @@ services:
       context: ../Front/xmas-hack
       dockerfile: Dockerfile
       args:
-        REACT_APP_BACK_ADDRESS: 127.0.0.1
+        REACT_APP_BACK_ADDRESS: front:3000
     ports:
       - '3002:3000'
   nginx-static:

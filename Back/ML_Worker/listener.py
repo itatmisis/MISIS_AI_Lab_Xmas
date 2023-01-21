@@ -13,6 +13,7 @@ predict_queue = os.environ.get("RABBITMQ.PREDICTQUEUE")
 
 
 
+
 if __name__ == '__main__':
     credentials = pika.PlainCredentials(user_name, password)
     connection = pika.BlockingConnection(pika.ConnectionParameters(host=host_name, port='5672', credentials= credentials))

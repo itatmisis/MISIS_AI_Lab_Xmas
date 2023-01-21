@@ -21,7 +21,7 @@ function WordCloud(props) {
 
     const loadData = () => {
         props.setSpinnerStatus(true)
-        fetch(`http://${process.env.REACT_APP_BACK_ADDRESS}:8155/UploadDocs/GetJsonByName?name=${removeExtension(props.fileName)}`)
+        fetch(`http://${process.env.REACT_APP_BACK_ADDRESS}/UploadDocs/GetJsonByName?name=${removeExtension(props.fileName)}`)
             .then((response) => response.json())
             .then((responseJson) => {
                 console.log(responseJson)

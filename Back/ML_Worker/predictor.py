@@ -3,7 +3,6 @@ from enum import Enum
 from pathlib import Path
 from typing import List, Dict, Tuple
 import re
-
 import pandas as pd
 import razdel
 import tika
