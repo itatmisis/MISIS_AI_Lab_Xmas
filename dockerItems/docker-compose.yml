@@ -72,7 +72,7 @@ services:
       args:
         REACT_APP_BACK_ADDRESS: 127.0.0.1
     ports:
-      - '3001:3000'
+      - '3002:3000'
   nginx-static:
       container_name: nginx-static
       image: nginx-static
