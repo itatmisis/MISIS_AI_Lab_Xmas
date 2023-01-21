@@ -14,5 +14,11 @@ CREATE TABLE predict (
 	id SERIAL PRIMARY KEY,
 	document_id INTEGER REFERENCES document(id),
 	type_id INTEGER REFERENCES document_type(id),
-	extra_info TEXT
+	extra_info text
+);
+
+CREATE TABLE email_doctype_rel (
+	id SERIAL PRIMARY KEY,
+	type_id INTEGER REFERENCES document_type(id),
+	email TEXT
 );

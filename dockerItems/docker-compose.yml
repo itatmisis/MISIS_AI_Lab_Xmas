@@ -2,13 +2,14 @@ version: '3.9'
 services:
   ml:
     build: 
-        context: ../
-        dockerfile: Back/ML_Worker/Dockerfile
+        context: ../Back/ML_Worker
+        dockerfile: Dockerfile
     depends_on:
       - rabbitmq
     volumes:
-      - ../static/documents:/opt/docs
-      - ../static/predict_info:/opt/output
+      - ../../../static/documents:/opt/docs
+      - ../../../static/predict_info:/opt/output
+
   rabbitmq:
     image: rabbitmq:3-management-alpine
     restart: always
@@ -20,8 +21,7 @@ services:
       - RABBITMQ_NODE_NAME=rabbit@stats
       - RABBITMQ_DEFAULT_USER=xmasuser
       - RABBITMQ_DEFAULT_PASS=xmaspassword
-    networks:
-        - xmas
+
   postgres:
     image: postgres:14.1-alpine
     restart: always
@@ -33,36 +33,46 @@ services:
       PGDATA: "/var/lib/postgresql/data/pgdata"
     volumes:
       - ./pg_data:/var/lib/postgresql/data
-  api:
+      - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+
+  backend:
     image: ${DOCKER_REGISTRY-}xmas-api
     build:
-      context: ../
-      dockerfile: Back/XmasHack.API/Dockerfile
+      context: ../Back/XmasHack.API
+      dockerfile: Dockerfile
     volumes:
-      - ../static/documents:/documents
-      - ../static/predict_info:/predict_info
+      - ../../../static/documents:/documents
+      - ../../../static/predict_info:/predict_info
+
+    env_file:
+      - api.env
     ports:
-      - '8888:80'
+      - '8155:80'
 
   crud_api:
     image: ${DOCKER_REGISTRY-}crud_api
     build:
-      context: ../
-      dockerfile: Back/Crud.API/Dockerfile
+      context: ../Back/Crud.API
+      dockerfile: Dockerfile
+    env_file:
+      - crud-api.env
     depends_on:
       - postgres
     volumes:
-      - ../static/documents:/documents
+      - ../../../static/documents:/documents
     ports:
       - '8887:8000'
-  # front:
-  #   image: ${DOCKER_REGISTRY-}front
-  #     build:
-  #       context: ../
-  #       dockerfile: Front/xmas-hack/Dockerfile
-  #     ports:
-  #       - '3001:3000'
 
+
+  front:
+    image: ${DOCKER_REGISTRY-}front
+    build:
+      context: ../Front/xmas-hack
+      dockerfile: Dockerfile
+      args:
+        REACT_APP_BACK_ADDRESS: 127.0.0.1
+    ports:
+      - '3001:3000'
   nginx-static:
       container_name: nginx-static
       image: nginx-static
@@ -72,8 +82,6 @@ services:
       restart: always
       ports:
           - "8005:80"
-          
-
 
 networks:
   xmas:

@@ -31,7 +31,8 @@ function LoadFiles(props) {
         })
         try {
             props.setSpinnerStatus(true);
-            const res = await axios.post("http://62.84.127.116:8888/UploadDocs", formData);
+            console.log(process.env.REACT_APP_BACK_ADDRESS)
+            const res = await axios.post(`http://${process.env.REACT_APP_BACK_ADDRESS}:8155/UploadDocs`, formData);
             NotificationManager.info('Файлы успешно загружены', '', 3000);
             props.setChoosedFiles([])
         } catch (ex) {

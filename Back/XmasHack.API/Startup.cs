@@ -31,6 +31,7 @@ namespace XmasHack.API
 
             services.AddTransient<ICrudAPI, CrudAPI>();
 
+            Console.WriteLine(appSettings["CrudAPI"]);
             services.AddHttpClient("CrudAPI", config =>
             {
                 config.BaseAddress = new Uri(appSettings["CrudAPI"]);
