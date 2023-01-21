@@ -4,6 +4,8 @@ services:
     build: 
         context: ../Back/ML_Worker
         dockerfile: Dockerfile
+    env_file:
+      - ml.env
     depends_on:
       - rabbitmq
     volumes:
