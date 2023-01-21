@@ -69,7 +69,7 @@ services:
       context: ../Front/xmas-hack
       dockerfile: Dockerfile
       args:
-        REACT_APP_BACK_ADDRESS: http://front:3000
+        REACT_APP_BACK_ADDRESS: http://backend:3000
     ports:
       - '3002:3000'
   nginx-static:
