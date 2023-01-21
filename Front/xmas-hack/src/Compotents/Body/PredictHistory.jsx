@@ -16,7 +16,7 @@ function PredictHistory(props) {
         // React advises to declare the async function directly inside useEffect
         async function loadFiles() {
             try {
-                const files = await axios.get(`http://${process.env.REACT_APP_BACK_ADDRESS}/UploadDocs/GetAllFiles`);
+                const files = await axios.get(`${process.env.REACT_APP_BACK_ADDRESS}/UploadDocs/GetAllFiles`);
                 setFiles(files["data"])
                 console.log(files["data"])
             } catch (ex) {
