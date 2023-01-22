@@ -8,6 +8,8 @@ services:
       - ml.env
     depends_on:
       - rabbitmq
+    networks:
+      - xmas
     volumes:
       - ../../../static/documents:/opt/docs
       - ../../../static/predict_info:/opt/output
@@ -15,6 +17,8 @@ services:
   rabbitmq:
     image: rabbitmq:3-management-alpine
     restart: always
+    networks:
+      - xmas
     ports:
       - '15672:15672'
       - '5672:5672'
@@ -27,6 +31,8 @@ services:
   postgres:
     image: postgres:14.1-alpine
     restart: always
+    networks:
+      - xmas
     env_file:
       - postgres.env
     ports:
@@ -42,6 +48,8 @@ services:
     build:
       context: ../Back/XmasHack.API
       dockerfile: Dockerfile
+    networks:
+      - xmas
     volumes:
       - ../../../static/documents:/documents
       - ../../../static/predict_info:/predict_info
@@ -53,6 +61,8 @@ services:
     build:
       context: ../Back/Crud.API
       dockerfile: Dockerfile
+    networks:
+      - xmas
     env_file:
       - crud-api.env
     depends_on:
@@ -62,7 +72,6 @@ services:
     ports:
       - '8887:8000'
 
-
   front:
     image: ${DOCKER_REGISTRY-}front
     build:
@@ -70,8 +79,11 @@ services:
       dockerfile: Dockerfile
       args:
         REACT_APP_BACK_ADDRESS: http://backend:80
+    networks:
+      - xmas
     ports:
       - '3002:3000'
+
   nginx-static:
       container_name: nginx-static
       image: nginx-static
@@ -81,6 +93,8 @@ services:
       restart: always
       ports:
           - "8005:80"
+      networks:
+      - xmas
 
 networks:
   xmas:
