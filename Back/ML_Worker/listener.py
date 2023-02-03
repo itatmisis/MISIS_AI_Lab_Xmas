@@ -3,6 +3,7 @@ import sys
 import pika
 from predictor import Predictor, ModelInputs
 from pathlib import Path
+import requests
 import os
 
 host_name = os.environ.get("RABBITMQ.HOSTNAME")
@@ -24,6 +25,10 @@ if __name__ == '__main__':
         try:
             ins = ModelInputs.parse_raw(body)
             result = pred.process(ins).json(indent=4, ensure_ascii=False)
+            try:
+                requests.post(f'http://109.120.190.28:8887/save_predict?document_id={result.task_id}&extra_info=_&type_id={result.predicted_class}', data={})
+            except Exception as ex:
+                print(ex)
             with (Path('output') / Path(ins.doc_path).with_suffix('.json')).open('w') as f:
                 f.write(result)
         except Exception as e:

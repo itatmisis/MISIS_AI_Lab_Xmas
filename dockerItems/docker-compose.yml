@@ -78,7 +78,7 @@ services:
       context: ../Front/xmas-hack
       dockerfile: Dockerfile
       args:
-        REACT_APP_BACK_ADDRESS: http://95.163.214.186:8155
+        REACT_APP_BACK_ADDRESS: http://109.120.190.28:8155
     networks:
       - xmas
     ports:
