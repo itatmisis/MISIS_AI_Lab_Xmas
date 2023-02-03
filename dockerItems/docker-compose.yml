@@ -27,6 +27,9 @@ services:
       - RABBITMQ_NODE_NAME=rabbit@stats
       - RABBITMQ_DEFAULT_USER=xmasuser
       - RABBITMQ_DEFAULT_PASS=xmaspassword
+    volumes:
+      - ./init/rabbitmq/rabbitmq-init.json:/etc/rabbitmq/definitions.json:ro
+      - ./init/rabbitmq/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
 
   postgres:
     image: postgres:14.1-alpine
