@@ -10,6 +10,11 @@
             }
         }
     ],
+    "vhosts": [
+        {
+         "name": "/"
+        }
+    ],
     "exchanges": [
     ],
     "bindings": [

@@ -10,6 +10,7 @@ services:
       - rabbitmq
     networks:
       - xmas
+    restart: always
     volumes:
       - ../../../static/documents:/opt/docs
       - ../../../static/predict_info:/opt/output
@@ -27,9 +28,9 @@ services:
       - RABBITMQ_NODE_NAME=rabbit@stats
       - RABBITMQ_DEFAULT_USER=xmasuser
       - RABBITMQ_DEFAULT_PASS=xmaspassword
-    volumes:
-      - ./init/rabbitmq/rabbitmq-init.json:/etc/rabbitmq/definitions.json:ro
-      - ./init/rabbitmq/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
+    # volumes:
+    #   - ./init/rabbitmq/rabbitmq-init.json:/etc/rabbitmq/definitions.json:ro
+    #   - ./init/rabbitmq/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
 
   postgres:
     image: postgres:14.1-alpine
@@ -48,6 +49,7 @@ services:
 
   backend:
     image: ${DOCKER_REGISTRY-}xmas-api
+    restart: always
     build:
       context: ../Back/XmasHack.API
       dockerfile: Dockerfile
@@ -61,6 +63,7 @@ services:
 
   crud_api:
     image: ${DOCKER_REGISTRY-}crud_api
+    restart: always
     build:
       context: ../Back/Crud.API
       dockerfile: Dockerfile
@@ -77,6 +80,7 @@ services:
 
   front:
     image: ${DOCKER_REGISTRY-}front
+    restart: always
     build:
       context: ../Front/xmas-hack
       dockerfile: Dockerfile
@@ -89,11 +93,11 @@ services:
 
   nginx-static:
       container_name: nginx-static
+      restart: always
       image: nginx-static
       build:
           context: ../
           dockerfile: nginx/Dockerfile
-      restart: always
       ports:
           - "8005:80"
       networks:
